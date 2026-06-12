@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List Your Farm — Enermind Poultry Platform</title>
+<meta name="description" content="Get your poultry farm, agrovet, or feed business listed on Kenya's largest poultry platform. Starting from KES 200.">
+<link rel="stylesheet" href="../public/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-icon">🐓</span>
+      <span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="listings.html">Browse Listings</a></li>
+      <li><a href="directory.html">Directory</a></li>
+      <li><a href="list-farm.html" class="active">List Your Farm</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="list-farm.html" class="btn btn-ghost">Sell / List</a>
+      <a href="listings.html" class="btn btn-primary">Browse Now</a>
+    </div>
+    <button class="nav-burger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="listings.html">Browse Listings</a>
+    <a href="directory.html">Directory</a>
+    <a href="list-farm.html">List Your Farm</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <p class="sec-label">Get listed</p>
+    <h1>List Your Farm or Business</h1>
+    <p>Reach thousands of buyers, farmers, and businesses across all 47 counties.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+  <div class="list-page">
+
+    <!-- FORM SIDE -->
+    <div>
+      <!-- SUCCESS STATE -->
+      <div id="listFormSuccess" style="display:none;background:var(--green-light);border-radius:var(--radius-lg);padding:3rem;text-align:center">
+        <div style="font-size:3.5rem;margin-bottom:1rem">🎉</div>
+        <h2 style="margin-bottom:.5rem;color:var(--green-dark)">You're listed!</h2>
+        <p style="color:var(--green-text);font-size:15px;margin-bottom:1.5rem">Your listing is now live on Enermind Poultry. Buyers in your county can now find and unlock your contact details.</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <a href="listings.html" class="btn btn-primary">View all listings</a>
+          <a href="list-farm.html" class="btn btn-ghost">Add another listing</a>
+        </div>
+      </div>
+
+      <div id="listFarmFormWrapper">
+        <div class="form-card">
+          <h2>Your details</h2>
+
+          <!-- ROLE -->
+          <div class="form-group">
+            <label>I am a <span style="color:red">*</span></label>
+            <select id="sellerRole">
+              <option value="">Select your role…</option>
+              <option value="Farmer">Poultry Farmer</option>
+              <option value="Buyer">Buyer / Off-taker</option>
+              <option value="Agrovet">Agrovet</option>
+              <option value="Feed Seller">Feed Seller</option>
+            </select>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="form-group">
+              <label>Full Name <span style="color:red">*</span></label>
+              <input type="text" id="sellerName" placeholder="e.g. John Mwangi">
+            </div>
+            <div class="form-group">
+              <label>Phone / WhatsApp <span style="color:red">*</span></label>
+              <input type="tel" id="sellerPhone" placeholder="07XX XXX XXX">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Email address</label>
+            <input type="email" id="sellerEmail" placeholder="john@example.com (optional)">
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="form-group">
+              <label>County <span style="color:red">*</span></label>
+              <select id="sellerCounty">
+                <option value="">Select county…</option>
+                <option>Nairobi</option><option>Kiambu</option><option>Nakuru</option>
+                <option>Uasin Gishu</option><option>Nyeri</option><option>Meru</option>
+                <option>Murang'a</option><option>Kirinyaga</option><option>Embu</option>
+                <option>Machakos</option><option>Makueni</option><option>Kajiado</option>
+                <option>Kisumu</option><option>Kakamega</option><option>Bungoma</option>
+                <option>Mombasa</option><option>Kilifi</option><option>Kwale</option>
+                <option>Garissa</option><option>Wajir</option><option>Mandera</option>
+                <option>Marsabit</option><option>Isiolo</option><option>Tharaka-Nithi</option>
+                <option>Laikipia</option><option>Nyandarua</option><option>Samburu</option>
+                <option>Trans Nzoia</option><option>West Pokot</option><option>Elgeyo-Marakwet</option>
+                <option>Nandi</option><option>Baringo</option><option>Kericho</option>
+                <option>Bomet</option><option>Narok</option><option>Siaya</option>
+                <option>Homa Bay</option><option>Migori</option><option>Kisii</option>
+                <option>Nyamira</option><option>Vihiga</option><option>Busia</option>
+                <option>Tana River</option><option>Lamu</option><option>Taita-Taveta</option>
+                <option>Kitui</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Nearest town / area</label>
+              <input type="text" id="sellerArea" placeholder="e.g. Ruaka, off Kiambu Rd">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card" style="margin-top:1.25rem">
+          <h2>Your listing</h2>
+
+          <div class="form-group">
+            <label>Listing title <span style="color:red">*</span></label>
+            <input type="text" id="listingTitle" placeholder="e.g. Broiler chicks — day-old, vaccinated, Cobb 500">
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="form-group">
+              <label>Price</label>
+              <input type="text" id="listingPrice" placeholder="e.g. KES 85 per chick">
+            </div>
+            <div class="form-group">
+              <label>Quantity / Stock</label>
+              <input type="text" id="listingQty" placeholder="e.g. 500 birds available">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="listingDesc" placeholder="Describe your birds, eggs, feed, or services. Include breed, age, vaccination status, delivery options etc."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Key features (comma separated)</label>
+            <input type="text" id="listingTags" placeholder="e.g. Vaccinated, Organic, Delivery available, Bulk discount">
+          </div>
+        </div>
+
+        <div class="form-card" style="margin-top:1.25rem">
+          <h2>Choose a listing plan</h2>
+          <div class="plan-grid">
+            <div class="plan-card" data-plan="basic" onclick="selectPlan('basic')">
+              <div class="plan-name">Basic</div>
+              <div class="plan-price">KES 200</div>
+              <div class="plan-dur">30 days</div>
+            </div>
+            <div class="plan-card popular" data-plan="standard" onclick="selectPlan('standard')">
+              <div class="plan-popular-tag">Popular</div>
+              <div class="plan-name">Standard</div>
+              <div class="plan-price">KES 350</div>
+              <div class="plan-dur">60 days</div>
+            </div>
+            <div class="plan-card" data-plan="premium" onclick="selectPlan('premium')">
+              <div class="plan-name">Premium</div>
+              <div class="plan-price">KES 500</div>
+              <div class="plan-dur">90 days</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--gray-600);margin-bottom:1.25rem">
+            <strong>Standard</strong> includes verified badge, higher ranking, and 3 listings. <strong>Premium</strong> gets top placement and unlimited listings.
+          </div>
+          <button class="btn btn-primary btn-full btn-lg" onclick="submitListingForm()">Continue to Payment →</button>
+          <div class="pp-note" style="margin-top:.75rem"><span class="pp-logo">PP</span> Secured by Pesapal · M-Pesa, Airtel Money, Card</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div>
+      <div class="sidebar-card">
+        <h3>Order summary</h3>
+        <div class="sidebar-item">
+          <span id="sidebarPlanName">Standard plan (60 days)</span>
+          <span id="sidebarPlanPrice">KES 350</span>
+        </div>
+        <div class="sidebar-item">
+          <span>Platform access</span>
+          <span style="color:var(--green-text)">Free</span>
+        </div>
+        <div class="sidebar-total">
+          <span>Total</span>
+          <span id="sidebarTotal">KES 350</span>
+        </div>
+        <button class="btn btn-primary btn-full" style="margin-top:1rem" onclick="submitListingForm()">Pay & Go Live</button>
+      </div>
+
+      <div class="sidebar-card" style="margin-top:1rem">
+        <h3>What you get</h3>
+        <ul style="list-style:none;font-size:13px;color:var(--gray-600);display:flex;flex-direction:column;gap:.5rem">
+          <li>✓ Listed in marketplace & directory</li>
+          <li>✓ Buyers can find you by county & category</li>
+          <li>✓ Your phone & WhatsApp unlocked by buyers</li>
+          <li>✓ Verified seller badge (Standard+)</li>
+          <li>✓ No commission on any sale you make</li>
+          <li>✓ Cancel or edit listing anytime</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-card" style="margin-top:1rem;background:var(--amber-light);border-color:var(--amber)">
+        <div style="font-size:1.5rem;margin-bottom:.5rem">💬</div>
+        <h3 style="margin-bottom:.4rem">Need help?</h3>
+        <p style="font-size:13px;color:var(--amber-text)">Call or WhatsApp us on <strong>+254 700 000 000</strong> or email <strong>info@enermindcompany.co.ke</strong></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="../index.html" class="logo"><span class="logo-icon">🐓</span><span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span></a>
+      <p>Kenya's largest poultry marketplace connecting farmers, buyers, agrovets, and feed sellers.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Platform</h4>
+      <a href="listings.html">Browse Listings</a>
+      <a href="directory.html">Directory</a>
+      <a href="list-farm.html">List Your Farm</a>
+    </div>
+    <div class="footer-links">
+      <h4>Categories</h4>
+      <a href="listings.html?cat=birds">Live Birds</a>
+      <a href="listings.html?cat=eggs">Eggs</a>
+      <a href="listings.html?cat=feeds">Feeds</a>
+      <a href="listings.html?cat=vets">Agrovets</a>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="mailto:info@enermindcompany.co.ke">Contact Us</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2024 Enermind Company. All rights reserved. | Payments secured by <strong>Pesapal</strong></p>
+    </div>
+  </div>
+</footer>
+
+<!-- LISTING PAYMENT MODAL -->
+<div class="modal-backdrop" id="listingPayModal" style="display:none" onclick="if(event.target===this)closeListingPayModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <h3>Pay listing fee</h3>
+        <p id="listingPayPlanName" style="font-size:13px;color:var(--gray-600);margin-top:2px">Standard plan — 60 days</p>
+      </div>
+      <button class="modal-close" onclick="closeListingPayModal()">✕</button>
+    </div>
+    <div id="listingPayStep1">
+      <div class="modal-amount-row">
+        <span class="modal-amount-label">Amount to pay</span>
+        <span class="modal-amount-val" id="listingPayAmount">KES 350</span>
+      </div>
+      <div class="alert alert-success">✓ Your listing will go live immediately after payment.</div>
+      <div class="form-group">
+        <label>Safaricom Number for M-Pesa</label>
+        <input type="tel" id="listingPayPhone" placeholder="07XX XXX XXX">
+      </div>
+      <button class="btn btn-primary btn-full" id="listingPayBtn" onclick="submitListingPayment()">Pay KES 350 via M-Pesa</button>
+      <div class="pp-note" style="margin-top:.75rem"><span class="pp-logo">PP</span> Secured by Pesapal · M-Pesa STK Push</div>
+    </div>
+    <div id="listingPayStep2" style="display:none">
+      <div class="stk-msg">
+        <div class="icon">📲</div>
+        <h3>Check your phone</h3>
+        <p>An M-Pesa prompt has been sent to <strong id="listingPayPhoneDisplay"></strong>. Enter your PIN to complete payment and go live.</p>
+        <div style="font-size:13px;color:var(--gray-600);margin-bottom:1rem">Confirming payment…</div>
+        <div style="width:100%;height:4px;background:var(--gray-100);border-radius:4px;overflow:hidden">
+          <div style="height:100%;background:var(--amber);width:0;animation:progress 3s linear forwards"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>@keyframes progress { from { width: 0 } to { width: 100% } }</style>
+
+<script src="../public/js/listings-data.js"></script>
+<script src="../public/js/main.js"></script>
+</body>
+</html>

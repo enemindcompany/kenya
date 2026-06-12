@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saved Listings — Enermind Poultry Platform</title>
+<link rel="stylesheet" href="../public/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-icon">🐓</span>
+      <span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="listings.html">Browse Listings</a></li>
+      <li><a href="market-prices.html">Market Prices</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="favourites.html" class="active">❤️ Saved</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="list-farm.html" class="btn btn-ghost">Sell / List</a>
+      <a href="listings.html" class="btn btn-primary">Browse Now</a>
+    </div>
+    <button class="nav-burger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="listings.html">Browse Listings</a>
+    <a href="market-prices.html">Market Prices</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="favourites.html">❤️ Saved</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <p class="sec-label">Your Account</p>
+    <h1>❤️ Saved Listings</h1>
+    <p>Listings you've bookmarked. Stored locally on your device.</p>
+  </div>
+</div>
+
+<div class="container" style="padding-top:2rem;padding-bottom:5rem">
+  <div class="listings-grid" id="favGrid"></div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="../index.html" class="logo"><span class="logo-icon">🐓</span><span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span></a>
+      <p>Kenya's largest poultry marketplace.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Platform</h4>
+      <a href="listings.html">Browse Listings</a>
+      <a href="market-prices.html">Market Prices</a>
+      <a href="calculator.html">Calculator</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>© 2024 Enermind Company. All rights reserved.</p></div></div>
+</footer>
+
+<script src="../public/js/listings-data.js"></script>
+<script src="../public/js/main.js"></script>
+<script>
+function toggleNav() { document.getElementById('navMobile').classList.toggle('open'); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const favs = getFavourites();
+  const grid = document.getElementById('favGrid');
+  if (!favs.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="icon">❤️</div>
+      <h3>No saved listings yet</h3>
+      <p>Tap the 🤍 heart icon on any listing to save it here.</p>
+      <a href="listings.html" class="btn btn-primary" style="margin-top:1rem">Browse Listings</a>
+    </div>`;
+    return;
+  }
+  const saved = LISTINGS.filter(l => favs.includes(l.id));
+  grid.innerHTML = saved.map(l => buildListingCardV2(l)).join('');
+});
+</script>
+</body>
+</html>

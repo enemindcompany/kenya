@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enermind Poultry Platform — Kenya's Largest Poultry Marketplace</title>
+<meta name="description" content="Connect with verified farmers, buyers, agrovets, and feed sellers across all 47 counties. Buy, sell, and grow your poultry business on Kenya's #1 poultry platform.">
+<link rel="stylesheet" href="public/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🐓</span>
+      <span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="pages/listings.html">Browse Listings</a>
+    <a href="pages/market-prices.html">Market Prices</a>
+    <a href="pages/calculator.html">Calculator</a></li>
+      <li><a href="pages/market-prices.html">Market Prices</a></li>
+      <li><a href="pages/calculator.html">Calculator</a></li>
+      <li><a href="pages/directory.html">Directory</a></li>
+      <li><a href="pages/list-farm.html">List Your Farm</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="pages/list-farm.html" class="btn btn-ghost">Sell / List</a>
+      <a href="pages/listings.html" class="btn btn-primary">Browse Now</a>
+    </div>
+    <button class="nav-burger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="pages/listings.html">Browse Listings</a>
+    <a href="pages/market-prices.html">Market Prices</a>
+    <a href="pages/calculator.html">Calculator</a>
+    <a href="pages/directory.html">Directory</a>
+    <a href="pages/list-farm.html">List Your Farm</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">🌱 Kenya's poultry platform</p>
+      <h1>One platform for every link in the <span class="highlight">poultry chain</span></h1>
+      <p class="hero-sub">Connect with verified farmers, buyers, agrovets, and feed sellers across all 47 counties. Browse freely — pay only when you find a match.</p>
+      <div class="hero-ctas">
+        <a href="pages/listings.html" class="btn btn-primary btn-lg">Browse Listings</a>
+        <a href="pages/list-farm.html" class="btn btn-outline-light btn-lg">List Your Farm</a>
+      </div>
+      <div class="trust-bar">
+        <span>✓ Verified sellers</span>
+        <span>✓ M-Pesa payments</span>
+        <span>✓ All 47 counties</span>
+        <span>✓ No middlemen</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><span class="stat-num">2,400+</span><span class="stat-label">Farmers</span></div>
+      <div class="stat-card"><span class="stat-num">380+</span><span class="stat-label">Buyers</span></div>
+      <div class="stat-card"><span class="stat-num">150+</span><span class="stat-label">Agrovets</span></div>
+      <div class="stat-card"><span class="stat-num">95+</span><span class="stat-label">Feed Sellers</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="section bg-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="sec-label">Who it's for</p>
+      <h2>Join as who you are</h2>
+      <p class="sec-sub">Every role has dedicated tools, listings, and connections built for them.</p>
+    </div>
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon">🐔</div>
+        <span class="role-tag green">Farmer</span>
+        <h3>Poultry Farmers</h3>
+        <p>List your birds, chicks, and eggs. Get verified and connect with buyers willing to pay fair prices.</p>
+        <a href="pages/list-farm.html?role=farmer" class="role-link">List your farm →</a>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🛒</div>
+        <span class="role-tag amber">Buyer</span>
+        <h3>Buyers & Off-takers</h3>
+        <p>Source broilers, layers, eggs, and kienyeji birds directly from verified farms near you.</p>
+        <a href="pages/listings.html" class="role-link">Browse listings →</a>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">💉</div>
+        <span class="role-tag blue">Agrovet</span>
+        <h3>Agrovets</h3>
+        <p>Reach more farmers. List vaccines, medications, and advisory services on the platform.</p>
+        <a href="pages/list-farm.html?role=agrovet" class="role-link">Get listed →</a>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">📦</div>
+        <span class="role-tag brown">Feed Seller</span>
+        <h3>Feed Sellers</h3>
+        <p>List your feeds, supplements, and additives. Receive orders from farmers across Kenya.</p>
+        <a href="pages/list-farm.html?role=feed" class="role-link">Start selling →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="sec-label">How it works</p>
+      <h2>Simple. Fast. No middlemen.</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h3>Browse for free</h3>
+        <p>Search listings by county, category, breed, or price. No account needed to browse.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h3>Unlock contacts</h3>
+        <p>Found a match? Pay a small fee via M-Pesa to unlock the seller's phone, WhatsApp, and location.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h3>Deal directly</h3>
+        <p>Contact the seller directly. Negotiate price, agree on logistics — no platform cut on your deal.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <h3>Leave a review</h3>
+        <p>Rate your experience after the deal. Build trust, attract more buyers, grow your business.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED LISTINGS -->
+<section class="section bg-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="sec-label">Marketplace</p>
+      <h2>Latest listings</h2>
+      <p class="sec-sub">Updated daily from farms and suppliers across Kenya.</p>
+    </div>
+    <div class="listings-tabs">
+      <button class="ltab active" onclick="filterListings('all',this)">All</button>
+      <button class="ltab" onclick="filterListings('birds',this)">Live Birds</button>
+      <button class="ltab" onclick="filterListings('eggs',this)">Eggs</button>
+      <button class="ltab" onclick="filterListings('feeds',this)">Feeds</button>
+      <button class="ltab" onclick="filterListings('vets',this)">Vet Products</button>
+    </div>
+    <div class="listings-grid" id="listingsGrid"></div>
+    <div class="section-footer">
+      <a href="pages/listings.html" class="btn btn-primary">View all listings</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="sec-label">Pricing</p>
+      <h2>Affordable unlock fees</h2>
+      <p class="sec-sub">Pay only when you find a seller worth contacting. No subscriptions, no hidden charges.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-icon">🐔</div>
+        <h3>Live Birds &amp; Eggs</h3>
+        <div class="price-amount">KES 50</div>
+        <p class="price-desc">per seller unlocked</p>
+        <ul class="price-list">
+          <li>✓ Phone number</li>
+          <li>✓ WhatsApp contact</li>
+          <li>✓ Farm location</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most popular</div>
+        <div class="price-icon">📦</div>
+        <h3>Feeds &amp; Agrovets</h3>
+        <div class="price-amount">KES 75</div>
+        <p class="price-desc">per seller unlocked</p>
+        <ul class="price-list">
+          <li>✓ Phone number</li>
+          <li>✓ WhatsApp contact</li>
+          <li>✓ Business address</li>
+          <li>✓ Product catalogue</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="price-icon">⚙️</div>
+        <h3>Equipment &amp; Assets</h3>
+        <div class="price-amount">KES 100</div>
+        <p class="price-desc">per seller unlocked</p>
+        <ul class="price-list">
+          <li>✓ Phone number</li>
+          <li>✓ WhatsApp contact</li>
+          <li>✓ Location</li>
+          <li>✓ Negotiation details</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container cta-inner">
+    <h2>Ready to grow your poultry business?</h2>
+    <p>Join thousands of Kenyans already connecting through Enermind.</p>
+    <div class="cta-btns">
+      <a href="pages/list-farm.html" class="btn btn-white btn-lg">List your farm — from KES 200</a>
+      <a href="pages/listings.html" class="btn btn-outline-white btn-lg">Browse listings for free</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo"><span class="logo-icon">🐓</span><span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span></a>
+      <p>Kenya's largest poultry marketplace connecting farmers, buyers, agrovets, and feed sellers across all 47 counties.</p>
+      <p style="margin-top:.5rem;font-size:13px;opacity:.7">www.enermindcompany.co.ke</p>
+    </div>
+    <div class="footer-links">
+      <h4>Platform</h4>
+      <a href="pages/listings.html">Browse Listings</a>
+    <a href="pages/market-prices.html">Market Prices</a>
+    <a href="pages/calculator.html">Calculator</a>
+      <a href="pages/directory.html">Directory</a>
+      <a href="pages/list-farm.html">List Your Farm</a>
+    </div>
+    <div class="footer-links">
+      <h4>Categories</h4>
+      <a href="pages/listings.html?cat=birds">Live Birds</a>
+      <a href="pages/listings.html?cat=eggs">Eggs</a>
+      <a href="pages/listings.html?cat=feeds">Feeds</a>
+      <a href="pages/listings.html?cat=vets">Agrovets</a>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="mailto:info@enermindcompany.co.ke">Contact Us</a>
+      <a href="pages/terms.html">Terms of Use</a>
+      <a href="pages/privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2024 Enermind Company. All rights reserved. | Payments secured by <strong>Pesapal</strong></p>
+    </div>
+  </div>
+</footer>
+
+<!-- UNLOCK MODAL -->
+<div class="modal-backdrop" id="unlockModal" style="display:none" onclick="if(event.target===this)closeUnlockModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <h3>Unlock seller contact</h3>
+        <p id="modalListingTitle" style="font-size:13px;color:var(--gray-600);margin-top:2px"></p>
+      </div>
+      <button class="modal-close" onclick="closeUnlockModal()">✕</button>
+    </div>
+    <div id="payStep">
+      <div class="modal-amount-row">
+        <span class="modal-amount-label">Unlock fee</span>
+        <span class="modal-amount-val" id="modalUnlockFee">KES 50</span>
+      </div>
+      <div class="alert alert-info" style="font-size:13px">
+        💡 You'll get the seller's phone number, WhatsApp, and exact location.
+      </div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="buyerName" placeholder="e.g. James Kamau">
+      </div>
+      <div class="form-group">
+        <label>Your Safaricom Number</label>
+        <input type="tel" id="buyerPhone" placeholder="07XX XXX XXX">
+      </div>
+      <button class="btn btn-primary btn-full" id="modalUnlockFeeBtn" onclick="submitUnlockPayment()">Pay KES 50 via M-Pesa</button>
+      <div class="pp-note"><span class="pp-logo">PP</span> Secured by Pesapal · M-Pesa STK Push</div>
+    </div>
+    <div id="stkStep" style="display:none">
+      <div class="stk-msg">
+        <div class="icon">📲</div>
+        <h3>Check your phone</h3>
+        <p>An M-Pesa prompt has been sent to <strong id="stkPhoneDisplay"></strong>. Enter your M-Pesa PIN to complete the payment.</p>
+        <div style="font-size:13px;color:var(--gray-600)">Waiting for confirmation…</div>
+        <div style="margin-top:1rem">
+          <div style="width:100%;height:4px;background:var(--gray-100);border-radius:4px;overflow:hidden">
+            <div style="height:100%;background:var(--green-dark);width:0;animation:progress 3s linear forwards" id="progressBar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes progress { from { width: 0 } to { width: 100% } }
+</style>
+
+<script src="public/js/listings-data.js"></script>
+<script src="public/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Prices — Enermind Poultry Platform</title>
+<meta name="description" content="Current Kenya poultry market prices for live birds, eggs, feeds, and vet products across all counties.">
+<link rel="stylesheet" href="../public/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<style>
+.price-table { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; overflow:hidden; border:1px solid var(--gray-100); }
+.price-table th { background:var(--green-dark); color:#fff; padding:12px 16px; text-align:left; font-size:13px; font-weight:600; letter-spacing:.04em; }
+.price-table td { padding:12px 16px; border-bottom:1px solid var(--gray-100); font-size:14px; vertical-align:middle; }
+.price-table tr:last-child td { border-bottom:none; }
+.price-table tr:hover td { background:#f8fdf5; }
+.trend-up { color:#27500A; font-weight:600; }
+.trend-down { color:#c0392b; font-weight:600; }
+.trend-stable { color:var(--gray-500); }
+.section-tabs { display:flex; gap:.5rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+.stab { padding:8px 18px; border-radius:20px; border:1px solid var(--gray-200); background:#fff; font-size:13px; font-weight:600; cursor:pointer; transition:all .15s; }
+.stab.active { background:var(--green-dark); color:#fff; border-color:var(--green-dark); }
+.price-card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; margin-bottom:2rem; }
+.price-summary-card { background:#fff; border:1px solid var(--gray-100); border-radius:10px; padding:1.25rem; }
+.price-summary-card .category { font-size:11px; font-weight:700; letter-spacing:.08em; color:var(--gray-500); text-transform:uppercase; margin-bottom:.25rem; }
+.price-summary-card .item { font-size:14px; font-weight:600; color:var(--gray-900); margin-bottom:.25rem; }
+.price-summary-card .range { font-size:1.1rem; font-weight:700; color:var(--green-dark); }
+.price-summary-card .updated { font-size:11px; color:var(--gray-500); margin-top:.5rem; }
+.county-badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; background:#e8f5e0; color:#27500A; }
+.alert-banner { background:#fffbea; border:1px solid #f5d94a; border-radius:10px; padding:14px 18px; font-size:14px; color:#7a5c00; margin-bottom:2rem; display:flex; align-items:center; gap:10px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-icon">🐓</span>
+      <span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="listings.html">Browse Listings</a></li>
+      <li><a href="market-prices.html" class="active">Market Prices</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="list-farm.html">List Your Farm</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="list-farm.html" class="btn btn-ghost">Sell / List</a>
+      <a href="listings.html" class="btn btn-primary">Browse Now</a>
+    </div>
+    <button class="nav-burger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="listings.html">Browse Listings</a>
+    <a href="market-prices.html">Market Prices</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="list-farm.html">List Your Farm</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <p class="sec-label">Intelligence</p>
+    <h1>Kenya Poultry Market Prices</h1>
+    <p>Reference prices collected from Enermind listings and verified sellers across all 47 counties. Updated weekly.</p>
+  </div>
+</div>
+
+<div class="container" style="padding-top:2rem;padding-bottom:5rem">
+
+  <div class="alert-banner">
+    📅 <strong>Last updated: June 2025.</strong> Prices vary by county, quantity, and season. Use these as reference ranges — always negotiate directly with sellers.
+  </div>
+
+  <!-- QUICK SUMMARY CARDS -->
+  <div class="price-card-grid" id="summaryCards"></div>
+
+  <!-- SECTION TABS -->
+  <div class="section-tabs">
+    <button class="stab active" onclick="showSection('birds',this)">🐔 Live Birds</button>
+    <button class="stab" onclick="showSection('eggs',this)">🥚 Eggs</button>
+    <button class="stab" onclick="showSection('feeds',this)">📦 Feeds</button>
+    <button class="stab" onclick="showSection('vets',this)">💉 Vet Products</button>
+    <button class="stab" onclick="showSection('equipment',this)">⚙️ Equipment</button>
+  </div>
+
+  <div style="overflow-x:auto">
+    <table class="price-table" id="priceTable">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>County / Region</th>
+          <th>Min Price</th>
+          <th>Max Price</th>
+          <th>Unit</th>
+          <th>Trend</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="priceTableBody"></tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:3rem">
+    <div class="section-header">
+      <p class="sec-label">What drives prices?</p>
+      <h2>Price factors to know</h2>
+    </div>
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon">🌧️</div>
+        <h3>Season</h3>
+        <p>Bird prices spike during December holidays and Easter. Plan purchases 4–6 weeks early to buy at lower cycle prices.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🚚</div>
+        <h3>Distance</h3>
+        <p>Transport adds KES 50–200 per bird depending on distance. Buying locally saves significant cost on live bird orders.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">📦</div>
+        <h3>Quantity</h3>
+        <p>Bulk orders (100+ birds or 10+ feed bags) consistently attract 5–15% discounts from verified Enermind sellers.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">✅</div>
+        <h3>Certification</h3>
+        <p>Vaccinated, verified birds command a 10–20% premium — but significantly reduce your mortality risk and vet bills.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="../index.html" class="logo"><span class="logo-icon">🐓</span><span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span></a>
+      <p>Kenya's largest poultry marketplace.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Platform</h4>
+      <a href="listings.html">Browse Listings</a>
+      <a href="market-prices.html">Market Prices</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="list-farm.html">List Your Farm</a>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="mailto:info@enermindcompany.co.ke">Contact Us</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>© 2024 Enermind Company. All rights reserved.</p></div></div>
+</footer>
+
+<script src="../public/js/listings-data.js"></script>
+<script>
+function toggleNav() { document.getElementById('navMobile').classList.toggle('open'); }
+
+const PRICES = {
+  birds: [
+    { product: 'Day-old broiler chick (Cobb 500)', county: 'Nairobi / Kiambu', min: 70, max: 100, unit: 'per chick', trend: 'stable', notes: 'Vaccinated Marek\'s' },
+    { product: 'Day-old broiler chick (Ross 308)', county: 'Nairobi / Kiambu', min: 80, max: 110, unit: 'per chick', trend: 'up', notes: 'Premium breed' },
+    { product: 'Layer pullet — 18 weeks (Isa Brown)', county: 'Nakuru / Kiambu', min: 800, max: 1100, unit: 'per bird', trend: 'up', notes: 'Ready to lay' },
+    { product: 'Kienyeji chick — KARI improved', county: 'Countrywide', min: 100, max: 150, unit: 'per chick', trend: 'stable', notes: 'Dual purpose' },
+    { product: 'Live broiler — 1.8kg', county: 'Nairobi', min: 380, max: 500, unit: 'per bird', trend: 'up', notes: 'Dressed available +KES 100' },
+    { product: 'Live broiler — 2.2kg', county: 'Nairobi', min: 480, max: 620, unit: 'per bird', trend: 'up', notes: 'Premium size' },
+    { product: 'Spent layer', county: 'Countrywide', min: 250, max: 380, unit: 'per bird', trend: 'stable', notes: 'Bulk clearance' },
+    { product: 'Live kienyeji — full grown', county: 'Rural counties', min: 600, max: 900, unit: 'per bird', trend: 'stable', notes: 'Free-range premium' },
+    { product: 'Fertilised broiler egg', county: 'Thika / Kiambu', min: 30, max: 45, unit: 'per egg', trend: 'stable', notes: 'Hatchery quality' },
+  ],
+  eggs: [
+    { product: 'Commercial egg — Grade A (tray)', county: 'Nairobi', min: 620, max: 700, unit: 'per tray (30)', trend: 'up', notes: 'Large size' },
+    { product: 'Commercial egg — Grade B (tray)', county: 'Nairobi', min: 540, max: 620, unit: 'per tray (30)', trend: 'stable', notes: 'Medium size' },
+    { product: 'Kienyeji egg (tray)', county: 'Countrywide', min: 800, max: 950, unit: 'per tray (30)', trend: 'up', notes: 'Organic premium' },
+    { product: 'Quail egg (tray)', county: 'Nairobi / Kiambu', min: 1200, max: 1500, unit: 'per tray (36)', trend: 'up', notes: 'Growing demand' },
+    { product: 'Fertilised kienyeji egg', county: 'Rural', min: 25, max: 40, unit: 'per egg', trend: 'stable', notes: 'Incubation quality' },
+  ],
+  feeds: [
+    { product: 'Broiler starter crumbs (50kg)', county: 'Nairobi', min: 2800, max: 3200, unit: 'per bag', trend: 'up', notes: '22–23% protein' },
+    { product: 'Broiler grower pellets (50kg)', county: 'Nairobi', min: 2600, max: 3000, unit: 'per bag', trend: 'up', notes: '20% protein' },
+    { product: 'Broiler finisher pellets (50kg)', county: 'Nairobi', min: 2400, max: 2800, unit: 'per bag', trend: 'stable', notes: '18% protein' },
+    { product: 'Layer mash — 18% protein (50kg)', county: 'Nairobi', min: 2600, max: 3000, unit: 'per bag', trend: 'up', notes: 'High calcium' },
+    { product: 'Kienyeji grower mash (50kg)', county: 'Countrywide', min: 1800, max: 2200, unit: 'per bag', trend: 'stable', notes: 'Suitable all stages' },
+    { product: 'Chick mash (50kg)', county: 'Nairobi', min: 2700, max: 3100, unit: 'per bag', trend: 'up', notes: '0–8 weeks' },
+    { product: 'Limestone (calcium supplement)', county: 'Nairobi', min: 350, max: 600, unit: 'per 25kg', trend: 'stable', notes: 'Layer supplement' },
+  ],
+  vets: [
+    { product: 'Newcastle vaccine — La Sota (1000 dose)', county: 'Nairobi', min: 1100, max: 1400, unit: 'per vial', trend: 'stable', notes: 'Cold chain required' },
+    { product: 'Gumboro / IBD vaccine (1000 dose)', county: 'Nairobi / Nakuru', min: 900, max: 1100, unit: 'per vial', trend: 'stable', notes: 'Day 14–18' },
+    { product: 'Marek\'s vaccine (1000 dose)', county: 'Nairobi', min: 1500, max: 2000, unit: 'per vial', trend: 'stable', notes: 'Day-old' },
+    { product: 'Amprolium (Anticoccidial) 1L', county: 'Countrywide', min: 700, max: 950, unit: 'per litre', trend: 'stable', notes: 'Prevention' },
+    { product: 'Oxytetracycline powder 1kg', county: 'Countrywide', min: 1200, max: 1800, unit: 'per kg', trend: 'stable', notes: 'Antibiotic' },
+    { product: 'Multivitamin supplement 500g', county: 'Countrywide', min: 400, max: 700, unit: 'per pack', trend: 'stable', notes: 'Stress recovery' },
+  ],
+  equipment: [
+    { product: 'Brooder (charcoal) — 500 capacity', county: 'Nairobi', min: 8000, max: 15000, unit: 'each', trend: 'stable', notes: 'Locally fabricated' },
+    { product: 'Electric brooder — 500 capacity', county: 'Nairobi', min: 18000, max: 35000, unit: 'each', trend: 'stable', notes: 'Solar compatible' },
+    { product: 'Feeder trough — 3kg', county: 'Countrywide', min: 350, max: 600, unit: 'each', trend: 'stable', notes: 'Galvanised steel' },
+    { product: 'Nipple drinker (50 nipples)', county: 'Nairobi', min: 2500, max: 4500, unit: 'per line', trend: 'stable', notes: 'Reduces water waste' },
+    { product: 'Egg tray (moulded pulp)', county: 'Nairobi', min: 12, max: 18, unit: 'each', trend: 'stable', notes: 'Min. 100 trays' },
+    { product: 'Poultry cage — 4-bird layer', county: 'Nairobi', min: 2200, max: 3500, unit: 'per unit', trend: 'stable', notes: 'Wire cage' },
+  ],
+};
+
+const SUMMARY = [
+  { category: 'Live Birds', item: 'Broiler chick', range: 'KES 70–110', icon: '🐔' },
+  { category: 'Eggs', item: 'Grade A tray', range: 'KES 620–700', icon: '🥚' },
+  { category: 'Feeds', item: 'Broiler starter', range: 'KES 2,800–3,200', icon: '📦' },
+  { category: 'Vet', item: 'Newcastle vac.', range: 'KES 1,100–1,400', icon: '💉' },
+];
+
+function showSection(key, btn) {
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable(key);
+}
+
+function renderTable(key) {
+  const data = PRICES[key] || [];
+  const tbody = document.getElementById('priceTableBody');
+  tbody.innerHTML = data.map(row => {
+    const trendEl = row.trend === 'up'
+      ? '<span class="trend-up">↑ Rising</span>'
+      : row.trend === 'down'
+      ? '<span class="trend-down">↓ Falling</span>'
+      : '<span class="trend-stable">→ Stable</span>';
+    return `<tr>
+      <td><strong>${row.product}</strong></td>
+      <td><span class="county-badge">${row.county}</span></td>
+      <td>KES ${row.min.toLocaleString()}</td>
+      <td>KES ${row.max.toLocaleString()}</td>
+      <td>${row.unit}</td>
+      <td>${trendEl}</td>
+      <td style="color:var(--gray-600);font-size:13px">${row.notes}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderSummary() {
+  document.getElementById('summaryCards').innerHTML = SUMMARY.map(s => `
+    <div class="price-summary-card">
+      <div class="category">${s.icon} ${s.category}</div>
+      <div class="item">${s.item}</div>
+      <div class="range">${s.range}</div>
+      <div class="updated">June 2025 · Nairobi avg.</div>
+    </div>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSummary();
+  renderTable('birds');
+});
+</script>
+</body>
+</html>

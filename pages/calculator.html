@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poultry Profit Calculator — Enermind</title>
+<meta name="description" content="Calculate your expected poultry farming profits. Estimate costs, revenue, and ROI for broilers, layers, and kienyeji.">
+<link rel="stylesheet" href="../public/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+<style>
+.calc-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+@media(max-width:768px){ .calc-wrapper { grid-template-columns:1fr; } }
+.calc-card { background: #fff; border: 1px solid var(--gray-100); border-radius: 12px; padding: 2rem; }
+.calc-card h3 { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: 1.25rem; color: var(--gray-900); }
+.input-row { margin-bottom: 1rem; }
+.input-row label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 4px; }
+.input-row input, .input-row select { width: 100%; padding: 9px 12px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; }
+.input-row input:focus, .input-row select:focus { outline: none; border-color: var(--green-dark); }
+.result-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gray-100); font-size: 14px; }
+.result-row:last-child { border-bottom: none; }
+.result-row .label { color: var(--gray-600); }
+.result-row .val { font-weight: 600; color: var(--gray-900); }
+.result-profit { background: #e8f5e0; border-radius: 10px; padding: 1.25rem; text-align: center; margin-top: 1rem; }
+.result-profit .big { font-size: 2rem; font-weight: 700; color: var(--green-dark); font-family: var(--font-display); }
+.result-profit .sub { font-size: 13px; color: var(--gray-600); margin-top: 4px; }
+.result-loss { background: #fff0f0; border-radius: 10px; }
+.result-loss .big { color: #c0392b !important; }
+.tabs-row { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.ctab { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--gray-200); background: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .15s; }
+.ctab.active { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
+.tip-box { background: #fffbea; border: 1px solid #f5d94a; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #7a5c00; margin-top: 1rem; line-height: 1.5; }
+.price-trend { margin-top: 1.5rem; }
+.trend-bar-wrap { margin-bottom: .75rem; }
+.trend-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; color: var(--gray-700); }
+.trend-bar-bg { height: 10px; background: var(--gray-100); border-radius: 5px; overflow: hidden; }
+.trend-bar { height: 100%; background: var(--green-dark); border-radius: 5px; transition: width .6s ease; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-icon">🐓</span>
+      <span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="listings.html">Browse Listings</a></li>
+      <li><a href="directory.html">Directory</a></li>
+      <li><a href="calculator.html" class="active">Calculator</a></li>
+      <li><a href="list-farm.html">List Your Farm</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="list-farm.html" class="btn btn-ghost">Sell / List</a>
+      <a href="listings.html" class="btn btn-primary">Browse Now</a>
+    </div>
+    <button class="nav-burger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="listings.html">Browse Listings</a>
+    <a href="directory.html">Directory</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="list-farm.html">List Your Farm</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <p class="sec-label">Tools</p>
+    <h1>Poultry Profit Calculator</h1>
+    <p>Estimate your costs, revenue, and expected profit before you start. Updated with current Kenya market prices.</p>
+  </div>
+</div>
+
+<div class="container" style="padding-top:2rem;padding-bottom:5rem">
+
+  <!-- TYPE TABS -->
+  <div class="tabs-row">
+    <button class="ctab active" onclick="switchType('broiler',this)">🐔 Broilers</button>
+    <button class="ctab" onclick="switchType('layer',this)">🥚 Layers</button>
+    <button class="ctab" onclick="switchType('kienyeji',this)">🌿 Kienyeji</button>
+  </div>
+
+  <div class="calc-wrapper">
+    <!-- LEFT: INPUTS -->
+    <div class="calc-card">
+      <h3>📥 Input your numbers</h3>
+
+      <div class="input-row">
+        <label>Number of birds</label>
+        <input type="number" id="numBirds" value="100" min="1" oninput="calculate()">
+      </div>
+      <div class="input-row">
+        <label id="chickLabel">Cost per chick (KES)</label>
+        <input type="number" id="chickCost" value="85" oninput="calculate()">
+      </div>
+      <div class="input-row">
+        <label>Feed cost per bird (KES) — full cycle</label>
+        <input type="number" id="feedCost" value="680" oninput="calculate()">
+      </div>
+      <div class="input-row">
+        <label>Vaccine &amp; medicine per bird (KES)</label>
+        <input type="number" id="vetCost" value="80" oninput="calculate()">
+      </div>
+      <div class="input-row">
+        <label>Labour &amp; other costs (KES total)</label>
+        <input type="number" id="labourCost" value="5000" oninput="calculate()">
+      </div>
+      <div class="input-row" id="sellingPriceRow">
+        <label id="sellingLabel">Selling price per bird (KES)</label>
+        <input type="number" id="sellingPrice" value="450" oninput="calculate()">
+      </div>
+      <div class="input-row" id="eggsRow" style="display:none">
+        <label>Eggs per bird per year</label>
+        <input type="number" id="eggsPerBird" value="280" oninput="calculate()">
+      </div>
+      <div class="input-row" id="eggPriceRow" style="display:none">
+        <label>Egg selling price (KES / egg)</label>
+        <input type="number" id="eggPrice" value="14" oninput="calculate()">
+      </div>
+      <div class="input-row">
+        <label>Mortality rate (%)</label>
+        <input type="number" id="mortality" value="5" min="0" max="50" oninput="calculate()">
+      </div>
+
+      <div class="tip-box" id="tipBox">
+        💡 <strong>Broiler tip:</strong> Aim for FCR (feed conversion ratio) below 2.0 for best profits. Source your chicks from verified hatcheries on Enermind.
+      </div>
+    </div>
+
+    <!-- RIGHT: RESULTS -->
+    <div>
+      <div class="calc-card">
+        <h3>📊 Profit Breakdown</h3>
+        <div class="result-row"><span class="label">Total birds purchased</span><span class="val" id="rBirds">—</span></div>
+        <div class="result-row"><span class="label">Expected survivors</span><span class="val" id="rSurvivors">—</span></div>
+        <div class="result-row"><span class="label">Total chick cost</span><span class="val" id="rChickTotal">—</span></div>
+        <div class="result-row"><span class="label">Total feed cost</span><span class="val" id="rFeedTotal">—</span></div>
+        <div class="result-row"><span class="label">Total vet cost</span><span class="val" id="rVetTotal">—</span></div>
+        <div class="result-row"><span class="label">Labour &amp; other</span><span class="val" id="rLabour">—</span></div>
+        <div class="result-row" style="font-weight:700;font-size:15px"><span class="label">Total investment</span><span class="val" id="rTotalCost" style="color:var(--gray-900)">—</span></div>
+        <div class="result-row" style="font-weight:700;font-size:15px"><span class="label">Expected revenue</span><span class="val" id="rRevenue" style="color:var(--green-dark)">—</span></div>
+
+        <div class="result-profit" id="profitBox">
+          <div class="big" id="profitAmount">KES —</div>
+          <div class="sub" id="profitLabel">Net profit</div>
+          <div style="margin-top:.5rem;font-size:13px;color:var(--gray-600)" id="roiLine">ROI: —%</div>
+        </div>
+      </div>
+
+      <!-- MARKET PRICES -->
+      <div class="calc-card" style="margin-top:1.5rem">
+        <h3>📈 Kenya Market Prices (June 2025)</h3>
+        <p style="font-size:13px;color:var(--gray-600);margin-bottom:1rem">Reference prices from Enermind listings. Update your inputs accordingly.</p>
+        <div class="price-trend" id="priceTrends"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS SECTION -->
+  <div style="margin-top:3rem">
+    <div class="section-header">
+      <p class="sec-label">Farmer Tips</p>
+      <h2>Cut costs, grow profits</h2>
+    </div>
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon">💧</div>
+        <h3>Water Management</h3>
+        <p>Ensure clean water at all times. Dehydration increases mortality by up to 15%. Use nipple drinkers to reduce wastage.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">📦</div>
+        <h3>Bulk Feed Buying</h3>
+        <p>Buying feed in bulk (10+ bags) typically saves KES 200–400 per bag. Source directly from feed sellers on Enermind.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">💉</div>
+        <h3>Vaccination Schedule</h3>
+        <p>Stick to a proper vaccination schedule: Marek's (day 1), Gumboro (day 14), Newcastle (day 21). Prevents costly disease outbreaks.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">📊</div>
+        <h3>Record Keeping</h3>
+        <p>Track daily feed intake, mortality, and weight gains. Farmers who keep records earn 20% more on average per cycle.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="../index.html" class="logo"><span class="logo-icon">🐓</span><span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span></a>
+      <p>Kenya's largest poultry marketplace connecting farmers, buyers, agrovets, and feed sellers across all 47 counties.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Platform</h4>
+      <a href="listings.html">Browse Listings</a>
+      <a href="directory.html">Directory</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="list-farm.html">List Your Farm</a>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="mailto:info@enermindcompany.co.ke">Contact Us</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>© 2024 Enermind Company. All rights reserved.</p></div></div>
+</footer>
+
+<script src="../public/js/listings-data.js"></script>
+<script>
+function toggleNav() { document.getElementById('navMobile').classList.toggle('open'); }
+
+let currentType = 'broiler';
+
+const DEFAULTS = {
+  broiler: { chickCost: 85, feedCost: 680, vetCost: 80, sellingPrice: 450, mortality: 5, eggsPerBird: 0, eggPrice: 0, tip: '💡 <strong>Broiler tip:</strong> Aim for FCR below 2.0. A 6-week broiler cycle means ~6 batches/year. Source chicks from verified hatcheries on Enermind.' },
+  layer: { chickCost: 350, feedCost: 3200, vetCost: 120, sellingPrice: 950, mortality: 8, eggsPerBird: 280, eggPrice: 14, tip: '💡 <strong>Layer tip:</strong> Layers peak at 80–90% production rate. Ensure 16 hrs light per day for maximum production.' },
+  kienyeji: { chickCost: 120, feedCost: 350, vetCost: 60, sellingPrice: 700, mortality: 10, eggsPerBird: 0, eggPrice: 0, tip: '💡 <strong>Kienyeji tip:</strong> KARI improved kienyeji grows faster (3–4 months). Let them free-range to cut feed costs by 30%.' },
+};
+
+const MARKET_PRICES = {
+  broiler: [
+    { label: 'Day-old chick', min: 70, max: 100, unit: 'KES/chick' },
+    { label: 'Broiler finisher (50kg)', min: 2800, max: 3200, unit: 'KES/bag' },
+    { label: 'Live broiler (1.8kg)', min: 380, max: 500, unit: 'KES/bird' },
+    { label: 'Newcastle vaccine (1000 dose)', min: 1100, max: 1400, unit: 'KES/vial' },
+  ],
+  layer: [
+    { label: 'Pullet (18 weeks)', min: 800, max: 1100, unit: 'KES/bird' },
+    { label: 'Layer mash (50kg)', min: 2600, max: 3000, unit: 'KES/bag' },
+    { label: 'Tray of eggs (30)', min: 600, max: 720, unit: 'KES/tray' },
+    { label: 'Gumboro vaccine (1000 dose)', min: 900, max: 1100, unit: 'KES/vial' },
+  ],
+  kienyeji: [
+    { label: 'KARI kienyeji chick', min: 100, max: 150, unit: 'KES/chick' },
+    { label: 'Kienyeji grower mash', min: 1800, max: 2200, unit: 'KES/bag' },
+    { label: 'Live kienyeji (full grown)', min: 600, max: 900, unit: 'KES/bird' },
+    { label: 'Kienyeji egg (tray)', min: 800, max: 950, unit: 'KES/tray' },
+  ],
+};
+
+function switchType(type, btn) {
+  currentType = type;
+  document.querySelectorAll('.ctab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const d = DEFAULTS[type];
+  document.getElementById('chickCost').value = d.chickCost;
+  document.getElementById('feedCost').value = d.feedCost;
+  document.getElementById('vetCost').value = d.vetCost;
+  document.getElementById('sellingPrice').value = d.sellingPrice;
+  document.getElementById('mortality').value = d.mortality;
+  document.getElementById('tipBox').innerHTML = d.tip;
+
+  const isLayer = type === 'layer';
+  document.getElementById('eggsRow').style.display = isLayer ? '' : 'none';
+  document.getElementById('eggPriceRow').style.display = isLayer ? '' : 'none';
+  if (isLayer) {
+    document.getElementById('eggsPerBird').value = d.eggsPerBird;
+    document.getElementById('eggPrice').value = d.eggPrice;
+    document.getElementById('sellingLabel').textContent = 'Spent layer selling price (KES)';
+    document.getElementById('chickLabel').textContent = 'Cost per pullet (KES)';
+  } else {
+    document.getElementById('sellingLabel').textContent = 'Selling price per bird (KES)';
+    document.getElementById('chickLabel').textContent = 'Cost per chick (KES)';
+  }
+
+  renderMarketPrices();
+  calculate();
+}
+
+function fmt(n) { return 'KES ' + Math.round(n).toLocaleString(); }
+
+function calculate() {
+  const n = parseFloat(document.getElementById('numBirds').value) || 0;
+  const chick = parseFloat(document.getElementById('chickCost').value) || 0;
+  const feed = parseFloat(document.getElementById('feedCost').value) || 0;
+  const vet = parseFloat(document.getElementById('vetCost').value) || 0;
+  const labour = parseFloat(document.getElementById('labourCost').value) || 0;
+  const sellPrice = parseFloat(document.getElementById('sellingPrice').value) || 0;
+  const mort = parseFloat(document.getElementById('mortality').value) || 0;
+
+  const survivors = Math.round(n * (1 - mort / 100));
+
+  const chickTotal = n * chick;
+  const feedTotal = n * feed;
+  const vetTotal = n * vet;
+  const totalCost = chickTotal + feedTotal + vetTotal + labour;
+
+  let revenue = survivors * sellPrice;
+  if (currentType === 'layer') {
+    const eggs = parseFloat(document.getElementById('eggsPerBird').value) || 0;
+    const eggP = parseFloat(document.getElementById('eggPrice').value) || 0;
+    revenue += survivors * eggs * eggP;
+  }
+
+  const profit = revenue - totalCost;
+  const roi = totalCost > 0 ? ((profit / totalCost) * 100).toFixed(1) : 0;
+
+  document.getElementById('rBirds').textContent = n.toLocaleString();
+  document.getElementById('rSurvivors').textContent = survivors.toLocaleString();
+  document.getElementById('rChickTotal').textContent = fmt(chickTotal);
+  document.getElementById('rFeedTotal').textContent = fmt(feedTotal);
+  document.getElementById('rVetTotal').textContent = fmt(vetTotal);
+  document.getElementById('rLabour').textContent = fmt(labour);
+  document.getElementById('rTotalCost').textContent = fmt(totalCost);
+  document.getElementById('rRevenue').textContent = fmt(revenue);
+
+  const box = document.getElementById('profitBox');
+  document.getElementById('profitAmount').textContent = fmt(Math.abs(profit));
+  document.getElementById('profitLabel').textContent = profit >= 0 ? '🎉 Net profit' : '⚠️ Net loss';
+  document.getElementById('roiLine').textContent = `ROI: ${roi}%`;
+
+  if (profit < 0) {
+    box.classList.add('result-loss');
+    box.querySelector('.big').style.color = '#c0392b';
+  } else {
+    box.classList.remove('result-loss');
+    box.querySelector('.big').style.color = 'var(--green-dark)';
+  }
+}
+
+function renderMarketPrices() {
+  const prices = MARKET_PRICES[currentType];
+  const container = document.getElementById('priceTrends');
+  container.innerHTML = prices.map(p => {
+    const pct = Math.min(100, ((p.min / p.max) * 80) + 20);
+    return `
+      <div class="trend-bar-wrap">
+        <div class="trend-label">
+          <span>${p.label}</span>
+          <span style="color:var(--green-dark);font-weight:600">${p.min.toLocaleString()}–${p.max.toLocaleString()} ${p.unit}</span>
+        </div>
+        <div class="trend-bar-bg">
+          <div class="trend-bar" style="width:${pct}%"></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderMarketPrices();
+  calculate();
+});
+</script>
+</body>
+</html>

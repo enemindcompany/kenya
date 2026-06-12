@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Directory — Enermind Poultry Platform</title>
+<meta name="description" content="Browse verified farmers, buyers, agrovets, and feed sellers on Kenya's #1 poultry platform.">
+<link rel="stylesheet" href="../public/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="../index.html" class="logo">
+      <span class="logo-icon">🐓</span>
+      <span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="listings.html">Browse Listings</a></li>
+      <li><a href="directory.html" class="active">Directory</a></li>
+      <li><a href="list-farm.html">List Your Farm</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="list-farm.html" class="btn btn-ghost">Sell / List</a>
+      <a href="listings.html" class="btn btn-primary">Browse Now</a>
+    </div>
+    <button class="nav-burger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="listings.html">Browse Listings</a>
+    <a href="directory.html">Directory</a>
+    <a href="list-farm.html">List Your Farm</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <p class="sec-label">Directory</p>
+    <h1>Verified Sellers &amp; Partners</h1>
+    <p>Farmers, buyers, agrovets, and feed sellers — all in one place.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container" style="padding-top:1.5rem;padding-bottom:5rem">
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <input type="text" class="search-input" id="dirSearch" placeholder="🔍 Search by name, county, specialty…">
+    <select class="filter-select" id="roleFilter">
+      <option value="">All roles</option>
+      <option value="Farmer">Farmers</option>
+      <option value="Buyer">Buyers</option>
+      <option value="Agrovet">Agrovets</option>
+      <option value="Feed Seller">Feed Sellers</option>
+    </select>
+  </div>
+
+  <!-- DIRECTORY GRID -->
+  <div class="dir-grid" id="dirGrid">
+    <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--gray-600)">Loading…</div>
+  </div>
+
+  <!-- JOIN CTA -->
+  <div style="margin-top:3rem;background:var(--off-white);border-radius:var(--radius-lg);padding:2.5rem;text-align:center">
+    <div style="font-size:2rem;margin-bottom:.75rem">🤝</div>
+    <h2 style="font-size:1.3rem;margin-bottom:.5rem">Not listed yet?</h2>
+    <p style="font-size:14px;color:var(--gray-600);margin-bottom:1.25rem">Join Kenya's largest poultry directory. Get found by buyers and suppliers across all 47 counties.</p>
+    <a href="list-farm.html" class="btn btn-primary">List Your Farm or Business</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="../index.html" class="logo"><span class="logo-icon">🐓</span><span class="logo-text">Enermind<span class="logo-accent">Poultry</span></span></a>
+      <p>Kenya's largest poultry marketplace connecting farmers, buyers, agrovets, and feed sellers.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Platform</h4>
+      <a href="listings.html">Browse Listings</a>
+      <a href="directory.html">Directory</a>
+      <a href="list-farm.html">List Your Farm</a>
+    </div>
+    <div class="footer-links">
+      <h4>Categories</h4>
+      <a href="listings.html?cat=birds">Live Birds</a>
+      <a href="listings.html?cat=eggs">Eggs</a>
+      <a href="listings.html?cat=feeds">Feeds</a>
+      <a href="listings.html?cat=vets">Agrovets</a>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="mailto:info@enermindcompany.co.ke">Contact Us</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2024 Enermind Company. All rights reserved. | Payments secured by <strong>Pesapal</strong></p>
+    </div>
+  </div>
+</footer>
+
+<script src="../public/js/listings-data.js"></script>
+<script src="../public/js/main.js"></script>
+</body>
+</html>
